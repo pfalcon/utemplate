@@ -11,8 +11,8 @@ if cmd == "compile":
         c.compile()
 
 elif cmd == "render":
-    mod = __import__(sys.argv[2])
-    for x in mod.render():
+    render = utemplate.compiled.load(sys.argv[2])
+    for x in render():
         sys.stdout.write(x)
 
 elif cmd == "run":
