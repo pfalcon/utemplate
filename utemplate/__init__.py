@@ -1,6 +1,8 @@
 # os module is loaded on demand
 #import os
 
+from . import compiled
+
 
 class Compiler:
 
@@ -115,17 +117,10 @@ class Loader:
     def __init__(self, dir):
         self.dir = dir
 
-    def load_compiled(self, name):
-        f = open(self.dir + "/compiled/" + name + ".py")
-        code = f.read()
-        f.close()
-        ns = {}
-        exec(code, ns)
-        return ns["render"]
-
     def load(self, name):
+        compiled_path = self.dir + "/compiled/" + name + ".py"
         try:
-            return self.load_compiled(name)
+            return compiled.load(compiled_path)
         except OSError:
             import os
             try:
@@ -133,9 +128,9 @@ class Loader:
             except OSError:
                 pass
             f_in = open(self.dir + "/" + name + ".tpl")
-            f_out = open(self.dir + "/compiled/" + name + ".py", "w")
+            f_out = open(compiled_path, "w")
             c = Compiler(f_in, f_out)
             c.compile()
             f_in.close()
             f_out.close()
-            return self.load_compiled(name)
+            return compiled.load(compiled_path)
