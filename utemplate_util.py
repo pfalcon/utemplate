@@ -1,13 +1,14 @@
 import sys
 import io
-import utemplate
+import utemplate.source
+import utemplate.compiled
 
 
 cmd = sys.argv[1]
 if cmd == "compile":
     out_name = sys.argv[2].replace(".", "_") + ".py"
     with open(sys.argv[2]) as f_in, open(out_name, "w") as f_out:
-        c = utemplate.Compiler(f_in, f_out)
+        c = utemplate.source.Compiler(f_in, f_out)
         c.compile()
 
 elif cmd == "render":
@@ -18,7 +19,7 @@ elif cmd == "render":
 elif cmd == "run":
     f_out = io.StringIO()
     with open(sys.argv[2]) as f_in:
-        c = utemplate.Compiler(f_in, f_out)
+        c = utemplate.source.Compiler(f_in, f_out)
         c.compile()
     ns = {}
     exec(f_out.getvalue(), ns)
