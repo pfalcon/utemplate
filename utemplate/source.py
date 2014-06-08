@@ -12,9 +12,11 @@ class Compiler:
     EXPR = "{"
     EXPR_END = "}}"
 
-    def __init__(self, file_in, file_out):
+    def __init__(self, file_in, file_out, indent=0, seq=0):
         self.file_in = file_in
         self.file_out = file_out
+        self.seq = seq
+        self._indent = indent
         self.stack = []
         self.in_literal = False
         self.flushed_header = False
@@ -23,9 +25,10 @@ class Compiler:
     def indent(self, adjust=0):
         if not self.flushed_header:
             self.flushed_header = True
-            self.file_out.write("def render(" + self.args + "):\n")
+            self.indent()
+            self.file_out.write("def render%s(%s):\n" % (str(self.seq) if self.seq else "", self.args))
             self.stack.append("def")
-        self.file_out.write("    " * (len(self.stack) + adjust))
+        self.file_out.write("    " * (len(self.stack) + self._indent + adjust))
 
     def literal(self, s):
         if not s:
@@ -52,6 +55,14 @@ class Compiler:
                 self.args = tokens[1]
             else:
                 self.args = ""
+        elif tokens[0] == "include":
+            with open(tokens[1][1:-1]) as inc:
+                self.seq += 1
+                c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
+                inc_id = self.seq
+                self.seq = c.compile()
+            self.indent()
+            self.file_out.write("yield from render%d()\n" % inc_id)
         elif len(tokens) > 1:
             if tokens[0] == "elif":
                 assert self.stack[-1] == "if"
@@ -110,6 +121,7 @@ class Compiler:
         for l in self.file_in:
             self.parse_line(l)
         self.close_literal()
+        return self.seq
 
 
 class Loader:
