@@ -56,7 +56,7 @@ class Compiler:
             else:
                 self.args = ""
         elif tokens[0] == "include":
-            with open(tokens[1][1:-1]) as inc:
+            with open(tokens[1][1:-1] + ".tpl") as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
