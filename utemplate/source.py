@@ -56,13 +56,17 @@ class Compiler:
             else:
                 self.args = ""
         elif tokens[0] == "include":
-            with open(tokens[1][1:-1] + ".tpl") as inc:
+            tokens = tokens[1].split(None, 1)
+            with open(tokens[0][1:-1] + ".tpl") as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
                 self.seq = c.compile()
             self.indent()
-            self.file_out.write("yield from render%d()\n" % inc_id)
+            args = ""
+            if len(tokens) > 1:
+                args = tokens[1]
+            self.file_out.write("yield from render%d(%s)\n" % (inc_id, args))
         elif len(tokens) > 1:
             if tokens[0] == "elif":
                 assert self.stack[-1] == "if"
