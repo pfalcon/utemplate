@@ -1,5 +1,5 @@
 import sys
-import io
+import _io as io
 import utemplate.source
 import utemplate.compiled
 
