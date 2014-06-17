@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='utemplate',
-      version='0.2.5',
+      version='0.2.6',
       description="""Very lightweight, memory-efficient (uses generator
 protocol), dependency-free template engine (compiles to Python source).
 Particularly well suited for usage with MicroPython.org""",
