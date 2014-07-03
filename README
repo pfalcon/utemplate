@@ -1,0 +1,29 @@
+utemplate is lightweight and memory-efficient template engine for
+Python, primarily intended for usage with MicroPython
+(https://github.com/micropython/micropython).
+
+utemplate syntax is roughly based on Django/Jinja2 syntax (e.g.
+"{% if %}"), but only the most needed features are offered (for
+example, "filters" are syntactic sugar for function call, and
+so far not planned for implementation).
+
+utemplates compiles templates to Python source code, specifically to
+a generator function, which, being iterated over, produces consecutive
+parts of a rendered template. This allows for minimal memory usage
+during template (with MicroPython, it starts from mere hundreds of
+bytes). Generate Python code can be imported as a module directly,
+or simple loader class is provided for convenience. There is also
+loader class which will compile templates on the fly, if not already
+compiled (currently not automatically recompiled if changed, on TODO).
+
+See examples/ directory for examples and supported features.
+
+To test/manage templates, "utemplate_util.py" tool is provided. For
+example, to quickly try a template (assuming you are already in
+"examples/" dir):
+
+micropython ../utemplate_util.py run squares.tpl
+
+or
+
+python3 ../utemplate_util.py run squares.tpl
