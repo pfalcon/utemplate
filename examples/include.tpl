@@ -1,3 +1,3 @@
 = Table of Squares =
-{% include "squares" %}
+{% include "squares.tpl" %}
 ====================

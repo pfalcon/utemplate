@@ -57,7 +57,7 @@ class Compiler:
                 self.args = ""
         elif tokens[0] == "include":
             tokens = tokens[1].split(None, 1)
-            with open(tokens[0][1:-1] + ".tpl") as inc:
+            with open(tokens[0][1:-1]) as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
@@ -144,7 +144,7 @@ class Loader:
                 os.mkdir(self.dir + "/compiled/")
             except OSError:
                 pass
-            f_in = open(self.dir + "/" + name + ".tpl")
+            f_in = open(self.dir + "/" + name)
             f_out = open(compiled_path, "w")
             c = Compiler(f_in, f_out)
             c.compile()
