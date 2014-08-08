@@ -12,9 +12,10 @@ class Compiler:
     EXPR = "{"
     EXPR_END = "}}"
 
-    def __init__(self, file_in, file_out, indent=0, seq=0):
+    def __init__(self, file_in, file_out, indent=0, seq=0, loader=None):
         self.file_in = file_in
         self.file_out = file_out
+        self.loader = loader
         self.seq = seq
         self._indent = indent
         self.stack = []
@@ -57,7 +58,7 @@ class Compiler:
                 self.args = ""
         elif tokens[0] == "include":
             tokens = tokens[1].split(None, 1)
-            with open(tokens[0][1:-1]) as inc:
+            with open(self.loader.file_path(tokens[0][1:-1])) as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
@@ -134,6 +135,9 @@ class Loader:
     def __init__(self, dir):
         self.dir = dir
 
+    def file_path(self, template):
+        return self.dir + "/" + template
+
     def load(self, name):
         compiled_path = self.dir + "/compiled/" + name + ".py"
         try:
@@ -144,9 +148,9 @@ class Loader:
                 os.mkdir(self.dir + "/compiled/")
             except OSError:
                 pass
-            f_in = open(self.dir + "/" + name)
+            f_in = open(self.file_path(name))
             f_out = open(compiled_path, "w")
-            c = Compiler(f_in, f_out)
+            c = Compiler(f_in, f_out, loader=self)
             c.compile()
             f_in.close()
             f_out.close()
