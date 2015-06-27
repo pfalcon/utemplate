@@ -4,17 +4,18 @@ Python, primarily intended for usage with MicroPython
 
 utemplate syntax is roughly based on Django/Jinja2 syntax (e.g.
 "{% if %}"), but only the most needed features are offered (for
-example, "filters" are syntactic sugar for function call, and
+example, "filters" are syntactic sugar for function calls, and
 so far not planned for implementation).
 
 utemplates compiles templates to Python source code, specifically to
-a generator function, which, being iterated over, produces consecutive
-parts of a rendered template. This allows for minimal memory usage
-during template (with MicroPython, it starts from mere hundreds of
-bytes). Generate Python code can be imported as a module directly,
-or simple loader class is provided for convenience. There is also
-loader class which will compile templates on the fly, if not already
-compiled (currently not automatically recompiled if changed, on TODO).
+a generator function which, being iterated over, produces consecutive
+parts (substrings) of a rendered template. This allows for minimal
+memory usage during template substitution (with MicroPython, it starts
+from mere hundreds of bytes). Generated Python code can be imported as
+a module directly, or simple loader class is provided for convenience.
+There is also loader class which will compile templates on the fly,
+if not already compiled (currently not automatically recompiled if
+changed, this is on TODO).
 
 See examples/ directory for examples and supported features.
 
