@@ -134,17 +134,26 @@ class Loader(compiled.Loader):
 
     def __init__(self, pkg, dir):
         super().__init__(pkg, dir)
-        if pkg != "__main__":
-            self.pkg = pkg
-        else:
+        self.dir = dir
+        if pkg == "__main__":
             # if pkg isn't really a package, don't bother to use it
             # it means we're running from "filesystem directory", not
             # from a package.
-            self.pkg = None
-        self.dir = dir
+            pkg = None
+
+        self.pkg_path = ""
+        if pkg:
+            p = __import__(pkg)
+            if isinstance(p.__path__, str):
+                # uPy
+                self.pkg_path = p.__path__
+            else:
+                # CPy
+                self.pkg_path = p.__path__[0]
+            self.pkg_path += "/"
 
     def file_path(self, template):
-        return self.dir + "/" + template
+        return self.pkg_path + self.dir + "/" + template
 
     def compiled_path(self, template):
         return self.dir + "/compiled/" + template.replace(".", "_") + ".py"
@@ -155,25 +164,14 @@ class Loader(compiled.Loader):
         except (OSError, ImportError):
             pass
 
-        pkg_path = ""
-        if self.pkg:
-            pkg = __import__(self.pkg)
-            if isinstance(pkg.__path__, str):
-                # uPy
-                pkg_path = pkg.__path__
-            else:
-                # CPy
-                pkg_path = pkg.__path__[0]
-            pkg_path += "/"
-
-        compiled_path = pkg_path + self.compiled_path(name)
+        compiled_path = self.pkg_path + self.compiled_path(name)
 
         import os
         try:
-            os.mkdir(pkg_path + self.dir + "/compiled/")
+            os.mkdir(self.pkg_path + self.dir + "/compiled/")
         except OSError:
             pass
-        f_in = open(pkg_path + self.file_path(name))
+        f_in = open(self.file_path(name))
         f_out = open(compiled_path, "w")
         c = Compiler(f_in, f_out, loader=self)
         c.compile()
