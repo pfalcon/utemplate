@@ -134,7 +134,13 @@ class Loader(compiled.Loader):
 
     def __init__(self, pkg, dir):
         super().__init__(pkg, dir)
-        self.pkg = pkg
+        if pkg != "__main__":
+            self.pkg = pkg
+        else:
+            # if pkg isn't really a package, don't bother to use it
+            # it means we're running from "filesystem directory", not
+            # from a package.
+            self.pkg = None
         self.dir = dir
 
     def file_path(self, template):
