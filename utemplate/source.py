@@ -130,28 +130,47 @@ class Compiler:
         return self.seq
 
 
-class Loader:
+class Loader(compiled.Loader):
 
-    def __init__(self, dir):
+    def __init__(self, pkg, dir):
+        super().__init__(pkg, dir)
+        self.pkg = pkg
         self.dir = dir
 
     def file_path(self, template):
         return self.dir + "/" + template
 
+    def compiled_path(self, template):
+        return self.dir + "/compiled/" + template.replace(".", "_") + ".py"
+
     def load(self, name):
-        compiled_path = self.dir + "/compiled/" + name + ".py"
         try:
-            return compiled.load(compiled_path)
+            return super().load(name)
+        except (OSError, ImportError):
+            pass
+
+        pkg_path = ""
+        if self.pkg:
+            pkg = __import__(self.pkg)
+            if isinstance(pkg.__path__, str):
+                # uPy
+                pkg_path = pkg.__path__
+            else:
+                # CPy
+                pkg_path = pkg.__path__[0]
+            pkg_path += "/"
+
+        compiled_path = pkg_path + self.compiled_path(name)
+
+        import os
+        try:
+            os.mkdir(pkg_path + self.dir + "/compiled/")
         except OSError:
-            import os
-            try:
-                os.mkdir(self.dir + "/compiled/")
-            except OSError:
-                pass
-            f_in = open(self.file_path(name))
-            f_out = open(compiled_path, "w")
-            c = Compiler(f_in, f_out, loader=self)
-            c.compile()
-            f_in.close()
-            f_out.close()
-            return compiled.load(compiled_path)
+            pass
+        f_in = open(pkg_path + self.file_path(name))
+        f_out = open(compiled_path, "w")
+        c = Compiler(f_in, f_out, loader=self)
+        c.compile()
+        f_in.close()
+        f_out.close()
+        return super().load(name)
