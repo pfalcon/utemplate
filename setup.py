@@ -1,8 +1,9 @@
 from setuptools import setup
+import optimize_upip
 
 
 setup(name='utemplate',
-      version='0.9.1',
+      version='1.0',
       description="""Very lightweight, memory-efficient (uses generator
 protocol), dependency-free template engine (compiles to Python source).
 Particularly well suited for usage with MicroPython.org""",
@@ -10,4 +11,5 @@ Particularly well suited for usage with MicroPython.org""",
       author='Paul Sokolovsky',
       author_email='pfalcon@users.sourceforge.net',
       license='MIT',
+      cmdclass={'optimize_upip': optimize_upip.OptimizeUpip},
       packages=['utemplate'])
