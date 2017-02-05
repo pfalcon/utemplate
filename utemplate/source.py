@@ -166,9 +166,9 @@ class Loader(compiled.Loader):
 
         compiled_path = self.pkg_path + self.compiled_path(name)
 
-        import os
+        import uos
         try:
-            os.mkdir(self.pkg_path + self.dir + "/compiled/")
+            uos.mkdir(self.pkg_path + self.dir + "/compiled/")
         except OSError:
             pass
         f_in = open(self.file_path(name))
