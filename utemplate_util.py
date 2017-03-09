@@ -1,6 +1,12 @@
 import sys
-import uos as os
-import uio as io
+try:
+    import uos as os
+except ImportError:
+    import os
+try:
+    import uio as io
+except ImportError:
+    import io
 import utemplate.source
 import utemplate.compiled
 
