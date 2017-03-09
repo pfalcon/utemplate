@@ -1,4 +1,4 @@
-utemplate is lightweight and memory-efficient template engine for
+utemplate is a lightweight and memory-efficient template engine for
 Python, primarily intended for usage with MicroPython
 (https://github.com/micropython/micropython).
 
