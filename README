@@ -28,3 +28,11 @@ micropython ../utemplate_util.py run squares.tpl
 or
 
 python3 ../utemplate_util.py run squares.tpl
+
+Templates can take parameters (that's how dynamic content is generated).
+Template parameters are passed as arguments to a generator function
+produced from a template. They also can be passed on the utemplate_util.py
+command line (arguments will be treated as strings in this case, but
+can be any types if called from your code):
+
+micropython ../utemplate_util.py run test1.tpl foo bar
