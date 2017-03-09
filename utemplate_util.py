@@ -1,6 +1,6 @@
 import sys
-import os
-import _io as io
+import uos as os
+import uio as io
 import utemplate.source
 import utemplate.compiled
 
