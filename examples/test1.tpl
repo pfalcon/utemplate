@@ -1,5 +1,7 @@
 {% args var, another %}
 hello
+first arg: {{var}}
+second arg: {{another}}
 {% for i in range(5) %}
 {% if i % 2 %}
 world
