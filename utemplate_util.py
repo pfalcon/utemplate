@@ -41,7 +41,7 @@ elif cmd == "render":
 elif cmd == "run":
     f_out = io.StringIO()
     with open(sys.argv[2]) as f_in:
-        c = utemplate.source.Compiler(f_in, f_out)
+        c = utemplate.source.Compiler(f_in, f_out, loader=utemplate.source.Loader(None, "."))
         c.compile()
     ns = {}
     exec(f_out.getvalue(), ns)
