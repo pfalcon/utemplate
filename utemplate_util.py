@@ -1,8 +1,6 @@
 import sys
-try:
-    import uos as os
-except ImportError:
-    import os
+import os
+import os.path
 try:
     import uio as io
 except ImportError:
@@ -41,7 +39,8 @@ elif cmd == "render":
 elif cmd == "run":
     f_out = io.StringIO()
     with open(sys.argv[2]) as f_in:
-        c = utemplate.source.Compiler(f_in, f_out, loader=utemplate.source.Loader(None, "."))
+        c = utemplate.source.Compiler(f_in, f_out,
+            loader=utemplate.source.Loader(None, os.path.dirname(sys.argv[2]) or "."))
         c.compile()
     ns = {}
     exec(f_out.getvalue(), ns)
