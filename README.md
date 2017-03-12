@@ -39,3 +39,6 @@ command line (arguments will be treated as strings in this case, but
 can be of any types if called from your code):
 
     micropython ../utemplate_util.py run test1.tpl foo bar
+
+If you want to see a complete example web application which uses utemplate,
+refer to https://github.com/pfalcon/notes-pico .
