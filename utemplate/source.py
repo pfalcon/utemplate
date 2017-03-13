@@ -58,7 +58,7 @@ class Compiler:
                 self.args = ""
         elif tokens[0] == "include":
             tokens = tokens[1].split(None, 1)
-            with open(self.loader.file_path(tokens[0][1:-1])) as inc:
+            with self.loader.file_open(tokens[0][1:-1]) as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
@@ -154,6 +154,9 @@ class Loader(compiled.Loader):
 
     def file_path(self, template):
         return self.pkg_path + self.dir + "/" + template
+    
+    def file_open(self, template):
+        return open(self.file_path(template))
 
     def compiled_path(self, template):
         return self.dir + "/compiled/" + template.replace(".", "_") + ".py"
