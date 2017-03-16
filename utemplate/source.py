@@ -57,6 +57,9 @@ class Compiler:
             else:
                 self.args = ""
         elif tokens[0] == "include":
+            if not self.flushed_header:
+                # If there was no other output, we still need a header now
+                self.indent()
             tokens = tokens[1].split(None, 1)
             with self.loader.input_open(tokens[0][1:-1]) as inc:
                 self.seq += 1
