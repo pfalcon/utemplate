@@ -56,6 +56,9 @@ class Compiler:
                 self.args = tokens[1]
             else:
                 self.args = ""
+        elif tokens[0] == "set":
+            self.indent()
+            self.file_out.write(stmt[3:].strip() + "\n")
         elif tokens[0] == "include":
             if not self.flushed_header:
                 # If there was no other output, we still need a header now
