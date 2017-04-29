@@ -3,7 +3,7 @@ import optimize_upip
 
 
 setup(name='utemplate',
-      version='1.0',
+      version='1.1',
       description="""Very lightweight, memory-efficient (uses generator
 protocol), dependency-free template engine (compiles to Python source).
 Particularly well suited for usage with MicroPython.org""",
