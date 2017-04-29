@@ -28,6 +28,9 @@ if cmd == "compile":
         os.unlink(loader.compiled_path(sys.argv[2]))
     except:
         pass
+    # Compiled file created from the current dir, but imported from
+    # sys.path, so make sure current dir is in sys.path.
+    sys.path.insert(0, ".")
     render = loader.load(sys.argv[2])
 
 elif cmd == "render":
