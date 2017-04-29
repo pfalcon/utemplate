@@ -163,7 +163,7 @@ class Loader(compiled.Loader):
         return open(path)
 
     def compiled_path(self, template):
-        return self.dir + "/compiled/" + template.replace(".", "_") + ".py"
+        return self.dir + "/" + template.replace(".", "_") + ".py"
 
     def load(self, name):
         try:
@@ -173,11 +173,6 @@ class Loader(compiled.Loader):
 
         compiled_path = self.pkg_path + self.compiled_path(name)
 
-        import uos
-        try:
-            uos.mkdir(self.pkg_path + self.dir + "/compiled/")
-        except OSError:
-            pass
         f_in = self.input_open(name)
         f_out = open(compiled_path, "w")
         c = Compiler(f_in, f_out, loader=self)

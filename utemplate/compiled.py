@@ -3,7 +3,8 @@ class Loader:
     def __init__(self, pkg, dir):
         if dir == ".":
             dir = ""
-        dir = dir.replace("/", ".") + ".compiled."
+        else:
+            dir = dir.replace("/", ".") + "."
         if pkg and pkg != "__main__":
             dir = pkg + "." + dir
         self.p = dir
