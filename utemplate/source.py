@@ -64,15 +64,23 @@ class Compiler:
                 # If there was no other output, we still need a header now
                 self.indent()
             tokens = tokens[1].split(None, 1)
+            args = ""
+            if len(tokens) > 1:
+                args = tokens[1]
+            if tokens[0][0] == "{":
+                self.indent()
+                # "1" as fromlist param is uPy hack
+                self.file_out.write('_ = __import__(%s.replace(".", "_"), None, None, 1)\n' % tokens[0][2:-2])
+                self.indent()
+                self.file_out.write("yield from _.render(%s)\n" % args)
+                return
+
             with self.loader.input_open(tokens[0][1:-1]) as inc:
                 self.seq += 1
                 c = Compiler(inc, self.file_out, len(self.stack) + self._indent, self.seq)
                 inc_id = self.seq
                 self.seq = c.compile()
             self.indent()
-            args = ""
-            if len(tokens) > 1:
-                args = tokens[1]
             self.file_out.write("yield from render%d(%s)\n" % (inc_id, args))
         elif len(tokens) > 1:
             if tokens[0] == "elif":
