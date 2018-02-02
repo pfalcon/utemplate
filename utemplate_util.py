@@ -22,7 +22,18 @@ if cmd == "rawcompile":
         c = utemplate.source.Compiler(f_in, f_out)
         c.compile()
 
-if cmd == "compile":
+if cmd == "compileall":
+    sys.path.insert(0, ".")
+    loader = utemplate.source.Loader(package, ".")
+    for cur_path, dirs, files in os.walk(sys.argv[2]):
+        for f in files:
+            if f.endswith(".py"):
+                continue
+            fname = cur_path + "/" + f
+            print(fname)
+            loader.load(fname)
+
+elif cmd == "compile":
     loader = utemplate.source.Loader(package, ".")
     try:
         os.unlink(loader.compiled_path(sys.argv[2]))
