@@ -1,5 +1,5 @@
 from setuptools import setup
-import optimize_upip
+import sdist_upip
 
 
 setup(name='utemplate',
@@ -11,5 +11,5 @@ Particularly well suited for usage with MicroPython.org""",
       author='Paul Sokolovsky',
       author_email='pfalcon@users.sourceforge.net',
       license='MIT',
-      cmdclass={'optimize_upip': optimize_upip.OptimizeUpip},
+      cmdclass={'sdist': sdist_upip.sdist},
       packages=['utemplate'])
