@@ -61,6 +61,21 @@ Supported statements:
 * `{% include {{name}} %}` - dynamically include template whose name is
   stored in variable `name`.
 
+Naming Conventions
+------------------
+
+The current conventions (may be adjusted in the future):
+
+* The recommended extension for templates is `.tpl`, e.g. `example.tpl`.
+* When template is compiled, dot (`.`) in its name is replaced
+  with underscore (`_`) and `.py` appended, e.g. `example_tpl.py`. It
+  thus can be imported with `import example_tpl`.
+* The name passed to `{% include %}` statement should be full name of
+  a template with extension, e.g. `{% include "example.tpl" %}`.
+* For dynamic form of the `include`, a variable should similarly contain
+  a full name of the template, e.g. `{% set name = "example.tpl" %}` /
+  `{% include {{name}} %}`.
+
 Examples
 --------
 
