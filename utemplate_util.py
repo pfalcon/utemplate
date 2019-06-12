@@ -1,3 +1,4 @@
+# (c) 2014-2019 Paul Sokolovsky. MIT license.
 import sys
 import os
 import os.path

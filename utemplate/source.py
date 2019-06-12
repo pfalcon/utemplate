@@ -1,6 +1,4 @@
-# os module is loaded on demand
-#import os
-
+# (c) 2014-2019 Paul Sokolovsky. MIT license.
 from . import compiled
 
 
