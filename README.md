@@ -38,6 +38,29 @@ can be of any types if called from your code):
 
     micropython ../utemplate_util.py run test1.tpl foo bar
 
+Quick Syntax Reference
+----------------------
+
+Evaluating Python expression, converting it to a string and outputting to
+rendered content:
+
+* `{{<expr>}}`
+
+Where `expr` is an arbitrary Python expression - from a bare variable name,
+to function calls, `yield from`, `await` expressions.
+
+Supported statements:
+
+* `{% if %}`, `{% elif %}`, `{% else %}`, `{% endif %}` - the usual "if"
+  statement
+* `{% for %}`, `{% endfor %}` - the usual "for" statement
+* `{% while %}`, `{% endwhile %}` - the usual "while" statement
+* `{% args var1, var2, ... %}` - specify arguments to a template
+* `{% set var = expr %}` - assignment statement
+* `{% include "name.tpl" %}` - statically include another template
+* `{% include {{name}} %}` - dynamically include template whose name is
+  stored in variable `name`.
+
 Examples
 --------
 
