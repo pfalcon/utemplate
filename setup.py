@@ -3,7 +3,7 @@ import sdist_upip
 
 
 setup(name='utemplate',
-      version='1.3.1',
+      version='1.3.2',
       description="""Very lightweight, memory-efficient, dependency-free template engine (compiles to Python source).""",
       long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
