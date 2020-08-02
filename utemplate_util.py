@@ -23,7 +23,7 @@ if cmd == "rawcompile":
         c = utemplate.source.Compiler(f_in, f_out)
         c.compile()
 
-if cmd == "compileall":
+elif cmd == "compileall":
     sys.path.insert(0, ".")
     loader = utemplate.source.Loader(package, ".")
     for cur_path, dirs, files in os.walk(sys.argv[2]):
