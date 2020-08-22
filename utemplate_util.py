@@ -37,7 +37,7 @@ elif cmd == "compileall":
 elif cmd == "compile":
     loader = utemplate.source.Loader(package, ".")
     try:
-        os.unlink(loader.compiled_path(sys.argv[2]))
+        os.remove(loader.compiled_path(sys.argv[2]))
     except:
         pass
     # Compiled file created from the current dir, but imported from
