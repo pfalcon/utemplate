@@ -79,15 +79,17 @@ The current conventions (may be adjusted in the future):
 Examples
 --------
 
-`examples/squares.tpl` as mentioned above has following content:
+`examples/squares.tpl` as mentioned in the usage examples above has the
+following content:
 
 ```
-{% for i in range(5) %}
+{% args n=5 %}
+{% for i in range(n) %}
 | {{i}} | {{"%2d" % i ** 2}} |
 {% endfor %}
 ```
 
-More examples are available in [examples/](examples/) directory.
+More examples are available in the [examples/](examples/) directory.
 
 If you want to see a complete example web application which uses utemplate,
 refer to https://github.com/pfalcon/notes-pico .
