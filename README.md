@@ -91,7 +91,7 @@ following content:
 
 More examples are available in the [examples/](examples/) directory.
 
-If you want to see a complete example web application which uses utemplate,
+If you want to see a complete example web application which uses `utemplate`,
 refer to https://github.com/pfalcon/notes-pico .
 
 License
