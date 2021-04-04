@@ -15,10 +15,17 @@ a generator function which, being iterated over, produces consecutive
 parts (substrings) of a rendered template. This allows for minimal
 memory usage during template substitution (with Pycopy, it starts
 from mere hundreds of bytes). Generated Python code can be imported as
-a module directly, or a simple loader class is provided for convenience.
+a module directly, or a simple loader class (`utemplate.compiled.Loader`)
+is provided for convenience.
+
 There is also a loader class which will compile templates on the fly,
-if not already compiled (currently not automatically recompiled if
-changed, this is on TODO).
+if not already compiled - `utemplate.source.Loader`.
+
+Finally, there's a loader which will automatically recompile a template
+module if source template is changed - `utemplate.recompile.Loader`.
+This loader class is the most convenient to use during development, but
+on the other hand, it performs extra processing not required for a
+finished/deployed application.
 
 To test/manage templates, `utemplate_util.py` tool is provided. For
 example, to quickly try a template (assuming you are already in
