@@ -68,10 +68,8 @@ Supported statements:
 * `{% include {{name}} %}` - dynamically include template whose name is
   stored in variable `name`.
 
-Naming Conventions
-------------------
-
-The current conventions (may be adjusted in the future):
+File Naming Conventions
+-----------------------
 
 * The recommended extension for templates is `.tpl`, e.g. `example.tpl`.
 * When template is compiled, dot (`.`) in its name is replaced
