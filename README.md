@@ -54,16 +54,22 @@ rendered content:
 * `{{<expr>}}`
 
 Where `expr` is an arbitrary Python expression - from a bare variable name,
-to function calls, `yield from`, `await` expressions.
+to function calls, `yield from`/`await` expressions, etc.
 
 Supported statements:
 
-* `{% if %}`, `{% elif %}`, `{% else %}`, `{% endif %}` - the usual "if"
+* `{% args <var1>, <var2>, ... %}` - specify arguments to a template
+  (optional, should be at the beginning of a template if you want to
+  pass any arguments). All argument types as supported by Python can
+  be used: positional and keyword, with default values, `*args` and
+  `**kwargs` forms, etc.
+* `{% if <expr> %}`, `{% elif <expr> %}`, `{% else %}`, `{% endif %}` -
+  similar to Python's `if` statement
+* `{% for <var> in <expr> %}`, `{% endfor %}` - similar to Python's
+  `for` statement
+* `{% while <expr> %}`, `{% endwhile %}` - similar to Python's `while`
   statement
-* `{% for %}`, `{% endfor %}` - the usual "for" statement
-* `{% while %}`, `{% endwhile %}` - the usual "while" statement
-* `{% args var1, var2, ... %}` - specify arguments to a template
-* `{% set var = expr %}` - assignment statement
+* `{% set <var> = <expr> %}` - assignment statement
 * `{% include "name.tpl" %}` - statically include another template
 * `{% include {{name}} %}` - dynamically include template whose name is
   stored in variable `name`.
