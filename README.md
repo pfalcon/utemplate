@@ -2,17 +2,19 @@ utemplate
 =========
 
 `utemplate` is a lightweight and memory-efficient template engine for
-Python, primarily intended for use with Pycopy, a lightweight Python
-implementation (https://github.com/pfalcon/pycopy).
+Python, primarily designed for use with Pycopy, a lightweight Python
+implementation (https://github.com/pfalcon/pycopy). It is also fully
+compatible with CPython and other compliant Python implementations.
 
 `utemplate` syntax is roughly based on Django/Jinja2 syntax (e.g.
 `{% if %}`, `{{var}}`), but only the most needed features are offered
-(for example, "filters" are syntactic sugar for function calls, and
-so far are not planned to be implemented).
+(for example, "filters" (`{{var|filter}}`) are syntactic sugar for
+function calls, and so far are not planned to be implemented, function
+calls can be used directly instead: `{{filter(var)}}`).
 
 `utemplate` compiles templates to Python source code, specifically to
 a generator function which, being iterated over, produces consecutive
-parts (substrings) of a rendered template. This allows for minimal
+parts (substrings) of the rendered template. This allows for minimal
 memory usage during template substitution (with Pycopy, it starts
 from mere hundreds of bytes). Generated Python code can be imported as
 a module directly, or a simple loader class (`utemplate.compiled.Loader`)
